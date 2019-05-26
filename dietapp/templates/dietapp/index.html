@@ -1,0 +1,49 @@
+{% extends "dietapp/base.html" %}
+
+{% block title %}Diet App{% endblock %}
+{% block page_header %}Выберите из списка продукты и оптимизацию{% endblock %}
+{% block content_text %}
+<div class="features">
+	<div class="feature">
+		{% if error_message %}
+			<p><strong>{{ error_message }}</strong></p>
+		{% endif %}
+		{% if product_list %}
+			<form action="{% url 'dietapp:result' %}" method="post">
+			{% csrf_token %}
+				<div class="table-wrapper"><table>
+					{% for product in product_list %}
+					<tr><td>
+						<input	type="checkbox"
+								name="product"
+								id="product{{ forloop.counter }}"
+								value="{{ product.id }}"
+								checked>
+						<label for="product{{ forloop.counter }}">
+							{{ product.name }}
+						</label>
+					</td></tr>
+					{% endfor %}
+				</table></div>
+
+				<p class="actions align-center"><input type="submit" value="Calculate"></p>
+			</form>
+			{% else %}
+				<p>No products are available.</p>
+
+		{% endif %}
+	</div>
+	{% if result_dict %}
+		<div class="feature">
+			<div class="table-wrapper"><table>
+			{% for product, qty in result_dict.items %}
+			<tr>
+				<td>{{ product }}</td>
+				<td>{{ qty }}</td>
+			</tr>
+			{% endfor %}
+		</table></div>
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

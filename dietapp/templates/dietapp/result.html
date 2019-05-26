@@ -1,0 +1,15 @@
+{% extends "dietapp/base.html" %}
+
+{% block title %}Diet App{% endblock %}
+{% block page_header %}Choose products from the list{% endblock %}
+{% block content_header %}{% endblock %}
+{% block content_text %}
+	<div class="table-wrapper"><table>
+		{% for product, qty in result_dict.items %}
+		<tr>
+			<td>{{ product }}</td>
+			<td>{{ qty }}</td>
+		</tr>
+		{% endfor %}
+	</table></div>
+{% endblock %}
